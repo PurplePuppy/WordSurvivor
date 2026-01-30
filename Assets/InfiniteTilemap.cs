@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -123,13 +124,9 @@ public class InfiniteTilemap : MonoBehaviour
         }
 
         // 6) 필요 없는 청크 언로드
-        var remove = new List<Vector2Int>();
-        foreach (var chunk in loaded)
-        {
-            if (chunk.x < minChunkX || chunk.x > maxChunkX ||
-                chunk.y < minChunkY || chunk.y > maxChunkY)
-                remove.Add(chunk);
-        }
+        var remove = loaded.Where(chunk => 
+            chunk.x < minChunkX || chunk.x > maxChunkX ||
+            chunk.y < minChunkY || chunk.y > maxChunkY).ToList();
 
         foreach (var chunk in remove)
         {
