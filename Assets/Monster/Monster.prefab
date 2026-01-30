@@ -166,9 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454165b07fc8b2344b376709f0e0389e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster
-  PlayerObject: {fileID: 0}
   moveSpeed: 1
   stopDistance: 1
+  expItemPrefab: {fileID: 9211928871063764805, guid: a9f03d4b05256964d875d449c5cd61dc, type: 3}
 --- !u!1 &4106920889918301685
 GameObject:
   m_ObjectHideFlags: 0
