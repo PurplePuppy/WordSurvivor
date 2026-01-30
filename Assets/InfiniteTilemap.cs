@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class InfiniteTilemapPlayerCamera : MonoBehaviour
+public class InfiniteTilemap : MonoBehaviour
 {
     // =========================
     // Refs (필수 연결)
