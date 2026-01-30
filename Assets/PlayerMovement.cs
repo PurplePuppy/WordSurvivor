@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,28 +15,39 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (!rb)
         {
-            Debug.LogWarning("PlayerMovement: No Rigidbody2D found, will use Transform-based movement");
+            Debug.LogError("PlayerMovement: Rigidbody2D is required for collision-based movement.");
         }
     }
 
     void Update()
     {
-        // WASD / Arrow keys로 입력 받기
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
-        moveInput.Normalize();
+        // Input System: WASD / Arrow keys
+        var keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+
+        float x = 0f;
+        float y = 0f;
+
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) x -= 1f;
+        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) x += 1f;
+        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) y -= 1f;
+        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) y += 1f;
+
+        moveInput = new Vector2(x, y);
+        if (moveInput.sqrMagnitude > 1f)
+        {
+            moveInput.Normalize();
+        }
     }
 
     void FixedUpdate()
     {
-        if (rb)
-        {
-            rb.velocity = moveInput * moveSpeed;
-        }
-        else
-        {
-            // Rigidbody2D가 없으면 Transform으로 직접 이동
-            transform.Translate(moveInput * moveSpeed * Time.fixedDeltaTime);
-        }
+        if (!rb) return;
+
+        rb.linearVelocity = moveInput * moveSpeed;
     }
 }
