@@ -17,6 +17,33 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError("PlayerMovement: Rigidbody2D is required for collision-based movement.");
         }
+
+        EnsureVisibleSprite();
+    }
+
+    void EnsureVisibleSprite()
+    {
+        var renderer = GetComponent<SpriteRenderer>();
+        if (renderer != null && renderer.sprite != null) return;
+
+        if (renderer == null)
+        {
+            renderer = gameObject.AddComponent<SpriteRenderer>();
+        }
+
+        // Create a simple square sprite so the player is visible without external assets.
+        const int size = 32;
+        var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        var color = new Color32(80, 220, 120, 255);
+        var pixels = new Color32[size * size];
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = color;
+        texture.SetPixels32(pixels);
+        texture.Apply();
+
+        var rect = new Rect(0, 0, size, size);
+        var pivot = new Vector2(0.5f, 0.5f);
+        renderer.sprite = Sprite.Create(texture, rect, pivot, 32f);
+        renderer.sortingOrder = 10;
     }
 
     void Update()
