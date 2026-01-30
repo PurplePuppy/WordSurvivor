@@ -10,9 +10,6 @@ public class InfiniteTilemap : MonoBehaviour
     // =========================
 
     [Header("Refs (필수)")]
-    [Tooltip("플레이어 Transform. 이 좌표로 카메라를 강제로 맞춥니다.")]
-    public Transform player;
-
     [Tooltip("메인 카메라. 비워두면 자동으로 Camera.main을 사용합니다.")]
     public Camera cam;
 
@@ -80,15 +77,10 @@ public class InfiniteTilemap : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!player || !cam || !ground || !baseTile) return;
+        if (!cam || !ground || !baseTile) return;
         if (!cam.orthographic) return; // 2D(직교) 카메라 기준 로직
 
-        // 1) 카메라 좌표 = 플레이어 좌표 (Z는 카메라 값 유지)
-        Vector3 cp = cam.transform.position;
-        Vector3 pp = player.position;
-        cam.transform.position = new Vector3(pp.x, pp.y, cp.z);
-
-        // 2) 카메라가 현재 '보고 있는 월드 영역'의 4코너 구하기
+        // 1) 카메라가 현재 '보고 있는 월드 영역'의 4코너 구하기
         float h = cam.orthographicSize * 2f;
         float w = h * cam.aspect;
         Vector3 p = cam.transform.position;
@@ -98,7 +90,7 @@ public class InfiniteTilemap : MonoBehaviour
         Vector3 tl = new Vector3(p.x - w * 0.5f, p.y + h * 0.5f, 0f);
         Vector3 tr = new Vector3(p.x + w * 0.5f, p.y + h * 0.5f, 0f);
 
-        // 3) 월드 -> 셀 변환 후, 최소/최대 셀 범위 계산 (아이소에서도 이 방식이 안전)
+        // 2) 월드 -> 셀 변환 후, 최소/최대 셀 범위 계산 (아이소에서도 이 방식이 안전)
         Vector3Int c1 = ground.WorldToCell(bl);
         Vector3Int c2 = ground.WorldToCell(br);
         Vector3Int c3 = ground.WorldToCell(tl);
@@ -109,13 +101,13 @@ public class InfiniteTilemap : MonoBehaviour
         int minCellY = Mathf.Min(c1.y, c2.y, c3.y, c4.y);
         int maxCellY = Mathf.Max(c1.y, c2.y, c3.y, c4.y);
 
-        // 4) 셀 범위를 청크 범위로 변환 (+ 여유분)
+        // 3) 셀 범위를 청크 범위로 변환 (+ 여유분)
         int minChunkX = Mathf.FloorToInt((float)minCellX / chunkSize) - paddingChunks;
         int maxChunkX = Mathf.FloorToInt((float)maxCellX / chunkSize) + paddingChunks;
         int minChunkY = Mathf.FloorToInt((float)minCellY / chunkSize) - paddingChunks;
         int maxChunkY = Mathf.FloorToInt((float)maxCellY / chunkSize) + paddingChunks;
 
-        // 5) 필요한 청크 로드
+        // 4) 필요한 청크 로드
         for (int y = minChunkY; y <= maxChunkY; y++)
         for (int x = minChunkX; x <= maxChunkX; x++)
         {
