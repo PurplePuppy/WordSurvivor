@@ -19,7 +19,9 @@ public class CameraFollow : MonoBehaviour
         
         if (smoothing > 0f)
         {
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, 1f - smoothing);
+            // Frame-rate independent smoothing using Time.deltaTime
+            float smoothSpeed = Mathf.Lerp(10f, 1f, smoothing);
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
         }
         else
         {

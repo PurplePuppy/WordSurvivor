@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (!rb)
+        {
+            Debug.LogWarning("PlayerMovement: No Rigidbody2D found, will use Transform-based movement");
+        }
     }
 
     void Update()
