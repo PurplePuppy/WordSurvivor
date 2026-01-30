@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-
-    public GameObject PlayerObject;
+    private GameObject PlayerObject;
     public float moveSpeed = 3f;
     public float stopDistance = 1f; // 멈출 거리
+    public GameObject expItemPrefab; // ExpItem 프리팹
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            PlayerObject = player.gameObject;
+        }
 
+        // TODO : 임시이기 떄문에 수정 필요
+        // 3초 후에 Die() 호출
+        Invoke("Die", 3f);
     }
 
     // Update is called once per frame
@@ -40,6 +48,20 @@ public class Monster : MonoBehaviour
                     transform.localScale = new Vector3(Mathf.Abs(transform.localScale.y), transform.localScale.y, transform.localScale.z);
                 }
             }
+
         }
+    }
+
+    // 몬스터가 죽을 때 호출
+    public void Die()
+    {
+        // ExpItem 생성
+        if (expItemPrefab != null)
+        {
+            Instantiate(expItemPrefab, transform.position, Quaternion.identity);
+        }
+
+        // 몬스터 제거
+        Destroy(gameObject);
     }
 }
