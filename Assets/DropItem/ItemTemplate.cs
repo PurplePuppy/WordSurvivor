@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemTemplate : MonoBehaviour
@@ -14,12 +13,6 @@ public class ItemTemplate : MonoBehaviour
         {
             playerObject = player.gameObject;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // 아이템이 수집되었을 때 호출 (자식 클래스에서 오버라이드)

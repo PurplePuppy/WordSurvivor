@@ -5,18 +5,6 @@ public class ExpItem : ItemTemplate
     [Tooltip("획득 시 제공되는 경험치 양")]
     public int expAmount = 10; // 경험치 양
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     // 경험치 아이템이 수집되었을 때
     protected override void OnCollected()
     {
