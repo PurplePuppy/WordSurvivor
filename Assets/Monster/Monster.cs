@@ -3,8 +3,11 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     private GameObject PlayerObject;
+    [Tooltip("몬스터의 이동 속도")]
     public float moveSpeed = 3f;
+    [Tooltip("플레이어로부터 멈출 거리")]
     public float stopDistance = 1f; // 멈출 거리
+    [Tooltip("몬스터가 죽을 때 드롭할 경험치 아이템 프리팹")]
     public GameObject expItemPrefab; // ExpItem 프리팹
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

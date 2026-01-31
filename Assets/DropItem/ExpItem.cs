@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ExpItem : ItemTemplate
 {
+    [Tooltip("획득 시 제공되는 경험치 양")]
     public int expAmount = 10; // 경험치 양
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
