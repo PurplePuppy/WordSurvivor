@@ -41,10 +41,6 @@ public class Monster : MonoBehaviour
                 // target을 향한 방향 계산
                 Vector3 direction = (playerObject.transform.position - transform.position).normalized;
 
-                // target을 향해 이동 (Rigidbody2D 사용)
-                Vector2 newPosition = rb.position + (Vector2)direction * moveSpeed * Time.deltaTime;
-                rb.MovePosition(newPosition);
-
                 // 이동 방향에 따라 좌우 반전 (전체 구조 뒤집기)
                 if (direction.x < 0) // 왼쪽으로 이동
                 {
@@ -59,10 +55,31 @@ public class Monster : MonoBehaviour
         }
     }
 
-    // 스포너 설정 (MonsterSpawner에서 호출)
-    public void SetSpawner(MonsterSpawner spawner)
+    // FixedUpdate is called at fixed intervals for physics calculations
+    void FixedUpdate()
     {
-        this.spawner = spawner;
+        if (playerObject != null)
+        {
+            // target까지의 거리 계산
+            float distance = Vector3.Distance(transform.position, playerObject.transform.position);
+
+            // 목표 거리보다 멀 때만 이동
+            if (distance > stopDistance)
+            {
+                // target을 향한 방향 계산
+                Vector3 direction = (playerObject.transform.position - transform.position).normalized;
+
+                // target을 향해 이동 (Rigidbody2D 사용)
+                Vector2 newPosition = rb.position + (Vector2)direction * moveSpeed * Time.fixedDeltaTime;
+                rb.MovePosition(newPosition);
+            }
+        }
+    }
+
+    // 스포너 설정 (MonsterSpawner에서 호출)
+    public void SetSpawner(MonsterSpawner monsterSpawner)
+    {
+        this.spawner = monsterSpawner;
     }
 
     // 몬스터가 죽을 때 호출
