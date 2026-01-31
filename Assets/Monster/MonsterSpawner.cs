@@ -42,11 +42,11 @@ public class MonsterSpawner : MonoBehaviour
         GameObject monster = Instantiate(monsterPrefab, spawnPosition, Quaternion.identity);
         currentMonsterCount++;
 
-        // 몬스터가 파괴될 때 카운트 감소
+        // 몬스터에 스포너 참조 설정
         Monster monsterScript = monster.GetComponent<Monster>();
         if (monsterScript != null)
         {
-            // 몬스터가 파괴될 때 이벤트 처리를 위해 MonoBehaviour.Destroy 대신 커스텀 처리 필요
+            monsterScript.SetSpawner(this);
         }
     }
 
