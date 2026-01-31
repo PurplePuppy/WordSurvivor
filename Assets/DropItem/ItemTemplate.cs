@@ -34,7 +34,6 @@ public class ItemTemplate : MonoBehaviour
         // 태그로 확인
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player detected! Collecting item...");
             OnCollected();
             Destroy(gameObject);
         }
