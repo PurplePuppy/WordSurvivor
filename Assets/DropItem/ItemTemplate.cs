@@ -8,7 +8,7 @@ public class ItemTemplate : MonoBehaviour
     void Start()
     {
         // 플레이어를 자동으로 찾기
-        Player player = FindFirstObjectByType<Player>();
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
         if (player != null)
         {
             playerObject = player.gameObject;
