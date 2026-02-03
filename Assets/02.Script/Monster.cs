@@ -16,7 +16,7 @@ public class Monster : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        PlayerCtrl player = FindFirstObjectByType<PlayerCtrl>();
         if (player != null)
         {
             playerObject = player.gameObject;

@@ -9,7 +9,7 @@ public class PlayerCtrl : MonoBehaviour
     [HideInInspector]
     public float speed;
     public float hp;
-    public float exp;
+    public int exp;
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class PlayerCtrl : MonoBehaviour
         pause = false;
         speed = 3.0f;
         hp = 100.0f;
-        exp = 0.0f;
+        exp = 0;
     }
 
     void Update()
@@ -55,12 +55,10 @@ public class PlayerCtrl : MonoBehaviour
         {
             hp -= 0.1f;
         }
+    }
 
-        if(collision.gameObject.tag == "Item")
-        {
-            exp += 1.0f;
-            Destroy(collision.gameObject);
-            Debug.Log("Item Get!");
-        }
+    public void AddExp(int exp)
+    {
+        this.exp += exp;
     }
 }

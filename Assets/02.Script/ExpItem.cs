@@ -9,8 +9,8 @@ public class ExpItem : ItemTemplate
     protected override void OnCollected()
     {
         // TODO: 플레이어 경험치 증가 로직
-        // Player player = playerObject.GetComponent<Player>();
-        // player.AddExp(expAmount);
+        PlayerCtrl player = playerObject.GetComponent<PlayerCtrl>();
+        player.AddExp(expAmount);
 
         Debug.Log($"경험치 {expAmount} 획득!");
     }
